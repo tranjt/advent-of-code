@@ -5,8 +5,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 
@@ -17,8 +17,14 @@ public class day1 {
         // part 1
         largerThanPreviousCount(measurements);
 
+
         // part 2
-        List<Integer> threeMeasurements = getThreeMeasurementList(measurements);
+        List<Integer> threeMeasurements = getWindowedList(
+                measurements
+                        .stream()
+                        .mapToInt(Integer::intValue)
+                        .toArray(),
+                3);
 
         largerThanPreviousCount(threeMeasurements);
     }
@@ -38,39 +44,34 @@ public class day1 {
     }
 
     public static int largerThanPreviousCount(List<Integer> measurements) {
-        AtomicInteger count = new AtomicInteger();
+        long count = IntStream
+                .rangeClosed(1, measurements.size() - 1)
+                .filter(i -> measurements.get(i) > measurements.get(i - 1))
+                .count();
 
-        measurements.stream()
-                .reduce((prev, curr) -> {
-                    if (prev < curr) {
-                        count.getAndIncrement();
-                    }
-                    return curr;
-                });
-
-        System.out.println("There are " + count + " measurements that are larger than the previous. ");
-        return count.intValue();
+        System.out.println("There are " + count + " measurements that are larger than the previous.");
+        return (int) count;
     }
 
-    public static List<Integer> getThreeMeasurementList(List<Integer> measurements) {
-        List<Integer> threeMeasurement = new ArrayList<>();
+    public static List<Integer> getWindowedList(int[] arr, int windowSize) {
+        int windowSum = 0;
+        List<Integer> windowedList = new ArrayList<>();
 
-        if (measurements.size() < 3) {
-            return threeMeasurement;
+        if (arr.length < windowSize) {
+            return windowedList;
         }
 
-        Integer prevprev = measurements.get(0);
-        Integer prev = measurements.get(1);
-        Integer curr;
+        for (int i = 0; i < windowSize; i++) {
+            windowSum += arr[i];
+        }
+        windowedList.add(windowSum);
 
-        for (int i = 2; i <= measurements.size() - 1; i++) {
-            curr = measurements.get(i);
-            threeMeasurement.add(prevprev + prev + curr);
-            prevprev = prev;
-            prev = curr;
+        for (int end = windowSize; end < arr.length; end++) {
+            windowSum += arr[end] - arr[end - windowSize];
+            windowedList.add(windowSum);
         }
 
-        return threeMeasurement;
+        return windowedList;
     }
 
 }
