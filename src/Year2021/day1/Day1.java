@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 
-public class day1 {
+public class Day1 {
 
     public static void main(String[] args) {
         List<Integer> measurements = getInputFromFile("src\\Year2021\\day1\\input");
