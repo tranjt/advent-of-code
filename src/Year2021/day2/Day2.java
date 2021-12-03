@@ -21,7 +21,7 @@ public class Day2 {
 
         System.out.println("Submarine");
         System.out.println("depth: " + sub.getDepth() + " horizontalPosition: " + sub.getHorizontalPosition());
-        System.out.println("depth * horizontalPosition: " + sub.getDepth()* sub.getHorizontalPosition());
+        System.out.println("depth * horizontalPosition: " + sub.getDepth() * sub.getHorizontalPosition());
 
 
         // part 2
@@ -34,7 +34,7 @@ public class Day2 {
                         + " horizontalPosition: "
                         + improvedSub.getHorizontalPosition());
         System.out.println("depth * horizontalPosition: "
-                + improvedSub.getDepth()* improvedSub.getHorizontalPosition());
+                + improvedSub.getDepth() * improvedSub.getHorizontalPosition());
     }
 
     public static List<Pair<String, Integer>> getInputFromFile(String fileName) {
@@ -50,8 +50,8 @@ public class Day2 {
         return inputs;
     }
 
-    public  static Pair<String, Integer> createAction(String actionStr) {
-        String [] actionSplit = actionStr.split(" ");
+    public static Pair<String, Integer> createAction(String actionStr) {
+        String[] actionSplit = actionStr.split(" ");
         return new Pair<>(actionSplit[0], Integer.parseInt(actionSplit[1]));
     }
 }
@@ -61,7 +61,7 @@ class Submarine {
     protected int depth;
 
     public Submarine() {
-        this(0,0);
+        this(0, 0);
     }
 
     public Submarine(int horizontalPosition, int depth) {
@@ -77,7 +77,7 @@ class Submarine {
             case "down":
                 depth += action.getValue();
                 break;
-            case  "up":
+            case "up":
                 depth -= action.getValue();
         }
     }
@@ -114,7 +114,7 @@ class ImprovedSubmarine extends Submarine {
             case "down":
                 aim += action.getValue();
                 break;
-            case  "up":
+            case "up":
                 aim -= action.getValue();
         }
     }
